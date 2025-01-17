@@ -183,9 +183,8 @@
         <table id="ipTable" class="table table-striped table-bordered display" style="width:100%">
             <thead>
                 <tr>
-                    <th>IP:Port</th>
                     <th>IP</th>
-                    <th>Port</th>
+                    <th>RevDNS</th>
                     <th>Country</th>
                     <th>Country Name</th>
                     <th>Continent</th>
@@ -219,9 +218,8 @@
             $('#ipTable').DataTable({
                 data: ipData,
                 columns: [
-                    { data: 'ip_port' },
                     { data: 'ip' },
-                    { data: 'port' },
+                    { data: 'dns_name' },
                     { data: 'country' },
                     { data: 'country_name' },
                     { data: 'continent' },
