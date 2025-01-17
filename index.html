@@ -12,6 +12,7 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            background-color: #f8f9fa;
         }
         .container { 
             max-width: 95%;
@@ -20,9 +21,10 @@
         .footer {
             margin-top: 2rem;
             padding: 1rem 0;
-            background-color: #f8f9fa;
+            background-color: #fff;
             text-align: center;
             width: 100%;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
         }
         .footer a {
             color: #0d6efd;
@@ -34,12 +36,123 @@
         .disclaimer {
             background-color: #f8d7da;
             border: 1px solid #f5c2c7;
-            border-radius: 4px;
-            padding: 1rem;
-            margin: 1rem 0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
         .description {
             margin-bottom: 2rem;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        /* DataTables custom styling */
+        .dataTables_wrapper {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .page-item.active .page-link {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+        }
+        
+        .page-link {
+            padding: 0.5rem 1rem;
+            color: #0d6efd;
+        }
+        
+        .dataTables_info {
+            padding-top: 1rem !important;
+        }
+        
+        .dataTables_paginate {
+            padding-top: 1rem !important;
+        }
+        
+        .paginate_button {
+            margin: 0 2px;
+            border: 1px solid #dee2e6 !important;
+            border-radius: 4px !important;
+            padding: 0.5rem 0.75rem !important;
+            background: white !important;
+        }
+        
+        .paginate_button.current {
+            background: #0d6efd !important;
+            color: white !important;
+            border-color: #0d6efd !important;
+        }
+        
+        .paginate_button:hover {
+            background: #e9ecef !important;
+            color: #0d6efd !important;
+            border-color: #0d6efd !important;
+        }
+        
+        .paginate_button.disabled {
+            opacity: 0.5;
+            cursor: not-allowed !important;
+        }
+        
+        .ellipsis {
+            padding: 0.5rem !important;
+        }
+        
+        .dataTables_filter input {
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 0.375rem 0.75rem;
+        }
+        
+        .dataTables_length select {
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+        }
+        
+        table.dataTable {
+            margin-top: 1rem !important;
+            margin-bottom: 1rem !important;
+        }
+        
+        table.dataTable thead th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            padding: 12px;
+        }
+        
+        table.dataTable tbody td {
+            padding: 12px;
+        }
+        
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: rgba(0,0,0,.02);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                max-width: 100%;
+                padding: 0;
+            }
+            
+            .dataTables_wrapper {
+                padding: 1rem;
+            }
+            
+            .description, .disclaimer {
+                padding: 1rem;
+            }
         }
     </style>
 </head>
@@ -87,7 +200,7 @@
 
     <footer class="footer">
         <div class="container">
-            <p>
+            <p class="mb-0">
                 Analyzed by: <a href="https://gohack.in/pl" target="_blank">Marcin Rybak</a> 
                 | <a href="ip_analysis_results.csv" download>Download CSV</a>
                 | Source: <a href="https://github.com/arsolutioner/fortigate-belsen-leak/tree/main" target="_blank">Fortigate Belsen Leak Research</a>
@@ -121,14 +234,22 @@
                 lengthMenu: [[25, 50, 100, -1], [25, 50, 100, "All"]],
                 order: [[0, 'asc']],
                 responsive: true,
-                dom: '<"top"lf>rt<"bottom"ip>',
                 language: {
-                    search: "Search:",
-                    lengthMenu: "Show _MENU_ entries",
+                    search: "_INPUT_",
+                    searchPlaceholder: "Search records...",
+                    lengthMenu: "Show _MENU_ entries per page",
                     info: "Showing _START_ to _END_ of _TOTAL_ entries",
-                    infoEmpty: "Showing 0 to 0 of 0 entries",
-                    infoFiltered: "(filtered from _MAX_ total entries)"
+                    infoEmpty: "Showing 0 entries",
+                    infoFiltered: "(filtered from _MAX_ total entries)",
+                    paginate: {
+                        first: "First",
+                        previous: "Previous",
+                        next: "Next",
+                        last: "Last"
+                    }
                 },
+                dom: '<"top"<"row"<"col-sm-6"l><"col-sm-6"f>>>rt<"bottom"<"row"<"col-sm-6"i><"col-sm-6 d-flex justify-content-end"p>>>',
+                pagingType: 'simple_numbers',
                 initComplete: function() {
                     $('.dataTables_length select').addClass('form-select form-select-sm');
                     $('.dataTables_filter input').addClass('form-control form-control-sm');
