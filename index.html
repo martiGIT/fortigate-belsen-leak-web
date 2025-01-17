@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fortigate CVE-2022-40684 IP Analysis</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/dataTables.bootstrap5.min.css">
+    <style>
+        body { 
+            padding: 20px; 
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .container { 
+            max-width: 95%;
+            flex: 1;
+        }
+        .footer {
+            margin-top: 2rem;
+            padding: 1rem 0;
+            background-color: #f8f9fa;
+            text-align: center;
+            width: 100%;
+        }
+        .footer a {
+            color: #0d6efd;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        .disclaimer {
+            background-color: #f8d7da;
+            border: 1px solid #f5c2c7;
+            border-radius: 4px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .description {
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4">Fortigate CVE-2022-40684 IP Analysis</h1>
+        
+        <div class="description">
+            <p>This page contains analyzed data about potentially affected Fortigate firewall devices related to the CVE-2022-40684 vulnerability. The data has been processed to include geographic and network information for research purposes.</p>
+            
+            <p>Original data source: <a href="https://github.com/arsolutioner/fortigate-belsen-leak/tree/main" target="_blank">Fortigate Belsen Leak Research Repository</a></p>
+            
+            <h3>About CVE-2022-40684</h3>
+            <p>A critical authentication bypass vulnerability affecting FortiOS, FortiProxy, and FortiSwitchManager that was disclosed by Fortinet in 2022. In January 2025, configurations from approximately 15,000 affected devices were publicly released.</p>
+        </div>
+
+        <div class="disclaimer">
+            <h4>⚠️ Disclaimer</h4>
+            <p>This data is provided for defensive security research purposes only. The information has been publicly disclosed and is being shared to help organizations assess their exposure and take necessary remediation steps. I do not endorse any malicious use of this data.</p>
+            <p>If your organization is affected, please take immediate action to:</p>
+            <ul>
+                <li>Update your Fortinet devices to the latest version</li>
+                <li>Conduct a security audit</li>
+                <li>Monitor for any suspicious activities</li>
+            </ul>
+        </div>
+
+        <table id="ipTable" class="table table-striped table-bordered display" style="width:100%">
+            <thead>
+                <tr>
+                    <th>IP:Port</th>
+                    <th>IP</th>
+                    <th>Port</th>
+                    <th>Country</th>
+                    <th>Country Name</th>
+                    <th>Continent</th>
+                    <th>Continent Name</th>
+                    <th>ASN</th>
+                    <th>AS Name</th>
+                    <th>AS Domain</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>
+                Analyzed by: <a href="https://gohack.in/pl" target="_blank">Marcin Rybak</a> 
+                | <a href="ip_analysis_results.csv" download>Download CSV</a>
+                | Source: <a href="https://github.com/arsolutioner/fortigate-belsen-leak/tree/main" target="_blank">Fortigate Belsen Leak Research</a>
+                | IP to ASN/Country data by <a href="https://ipinfo.io" target="_blank">ipinfo.io</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/dataTables.bootstrap5.min.js"></script>
+    <script src="ip_data.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            $('#ipTable').DataTable({
+                data: ipData,
+                columns: [
+                    { data: 'ip_port' },
+                    { data: 'ip' },
+                    { data: 'port' },
+                    { data: 'country' },
+                    { data: 'country_name' },
+                    { data: 'continent' },
+                    { data: 'continent_name' },
+                    { data: 'asn' },
+                    { data: 'as_name' },
+                    { data: 'as_domain' }
+                ],
+                pageLength: 50,
+                lengthMenu: [[25, 50, 100, -1], [25, 50, 100, "All"]],
+                order: [[0, 'asc']],
+                responsive: true,
+                dom: '<"top"lf>rt<"bottom"ip>',
+                language: {
+                    search: "Search:",
+                    lengthMenu: "Show _MENU_ entries",
+                    info: "Showing _START_ to _END_ of _TOTAL_ entries",
+                    infoEmpty: "Showing 0 to 0 of 0 entries",
+                    infoFiltered: "(filtered from _MAX_ total entries)"
+                },
+                initComplete: function() {
+                    $('.dataTables_length select').addClass('form-select form-select-sm');
+                    $('.dataTables_filter input').addClass('form-control form-control-sm');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
